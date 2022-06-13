@@ -14,7 +14,7 @@ const PhotoGallery = ( galleryData ) => {
     <div className='products-container'>
         
         {images?.map((item, i) => (
-          <div className='product-card'>
+          <div key={i} className='product-card'>
               <img
                 src={urlFor(item.image[0])}
                 key={i}
