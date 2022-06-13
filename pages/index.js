@@ -1,8 +1,8 @@
 import React from 'react';
 import {client} from '../lib/client';
-import {Product, FooterBanner, HeroBanner} from '../components';
+import {Product, FooterBanner, HeroBanner, PhotoGallery} from '../components';
 
-const index = ({ products, bannerData }) => {
+const index = ({ galleryData, products, bannerData }) => {
   return (
     <>
       <HeroBanner heroBanner={bannerData.length && bannerData[0]}/>
@@ -16,7 +16,10 @@ const index = ({ products, bannerData }) => {
         {products?.map((product) => <Product key={product._id} product={product}/>)}
       </div>
       </div>
-      <FooterBanner footerBanner={bannerData && bannerData[0]}/>
+      <hr className='gallery-divider'></hr>
+      <div className='gallery-container'>
+        <PhotoGallery galleryData={galleryData} />
+      </div>
     </>
   )
 }
@@ -27,8 +30,11 @@ export const getServerSideProps = async () => {
   const bannerQuery = '*[_type == "banner"]';
   const bannerData = await client.fetch(bannerQuery);
 
+  const galleryQuery = '*[_type == "gallery"]';
+  const galleryData = await client.fetch(galleryQuery);
+
   return {
-    props: {products, bannerData}
+    props: {products, bannerData, galleryData}
   }
 }
 
